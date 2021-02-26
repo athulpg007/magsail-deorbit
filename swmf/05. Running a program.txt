@@ -1,0 +1,7 @@
+make rundir RUNDIR=run_test9 STANDALONE=YES
+
+make -j
+
+cd run_test9
+
+mpirun -np 4 BATSRUS.exe

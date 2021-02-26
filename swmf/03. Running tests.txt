@@ -1,0 +1,7 @@
+make test_help
+
+make -j test_shocktube
+
+make -j test NP=4
+
+make test_comet NP=4

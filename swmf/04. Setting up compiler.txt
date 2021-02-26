@@ -1,0 +1,4 @@
+/Config.pl -noopenmp -u=Ganymede -e=MhdHypPe -g=8,8,8
+
+
+

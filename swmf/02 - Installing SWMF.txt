@@ -1,0 +1,47 @@
+Install prerequisites
+
+--
+
+
+sudo apt-get install gfortran
+
+sudo apt-get install openmpi-bin
+
+sudo apt-get install curl
+
+curl -L http://xrl.us/installperlnix | bash
+
+sudo apt install gcc
+
+sudo apt install mpif90
+
+sudo apt-get install libopenmpi
+
+sudo apt-get install texlive-extra-utils
+
+--
+
+Extract SWMF.tgz archive 
+
+--
+
+cd into SWMF folder
+
+--
+
+Install SWMF
+
+-- ./Config.pl -install -compiler=gfortran
+
+
+Make documentation
+
+-- 
+
+cd doc/Tex/
+
+make PDF
+
+
+
+

@@ -1,0 +1,173 @@
+#DESCRIPTION
+Test Ganymede run of steady state ideal MHD G8 flyby
+MhdHypPe equation set.
+face-based innerBC. magsail production
+
+#PLANET
+NEW		NamePlanet
+1.0			RadiusPlanet [m]
+1.0		MassPlanet   [kg]
+0.0			OmegaPlanet  [radian/s]
+0.0			TiltRotation [degree]
+DIPOLE			TypeBField
+0.0                    MagAxisThetaGeo [degree]
+289.1550                MagAxisPhiGeo   [degree]
+-314E-7            DipoleStrength  [T]
+
+#ROTATION
+F			UseRotation
+
+#TIMEACCURATE
+F			DoTimeAccurate
+
+#SAVERESTART
+F			DoSaveRestart
+60000			DnSaveRestart
+-1.0			DtSaveRestart
+
+#PROGRESS
+1			DnShowProgressShort
+10			DnShowProgressLong
+
+HYPERBOLICDIVB
+T                       UseHyperbolicDivb
+150.0                   SpeedHypDim
+0.1                     HypDecay
+
+#COORDSYSTEM
+GSE			TypeCoordinate
+
+#BODY
+T			UseBody
+1.5			rBody      [rPlanet]
+3.5			rCurrents  [rPlanet]
+39			BodyNDim   [/cc]
+2.32e5			BodyTDim   [K]
+
+! use BodyNDim, BodyTDim only, rbody as a parameter for plot
+BODY
+F			
+
+#SOLARWIND
+500000.0	        SwNDim   [/cc]
+1000.0		        SwTDim   [K] (3.8nPa/(1.38e-23*2/cc))/1.2
+-7.6			SwUxDim  [km/s]
+0.0			SwUyDim  [km/s]
+0.0		        SwUzDim  [km/s]
+0.0			SwBxDim  [nT]
+0.0			SwByDim  [nT]
+0.0			SwBzDim  [nT]
+
+#PLASMA
+16.0			FluidMass [amu]
+1.0                     AverageIonCharge [e]
+1.0                ElectronTemperatureRatio
+
+#MINIMUMPRESSURE
+0.001			pMinDim
+0.001			PeMinDim for electron pressure
+
+#MINIMUMDENSITY
+0.001			RhoMinDim
+
+#NONCONSERVATIVE
+F			UseNonConservative
+
+#CONSERVATIVECRITERIA
+0			nConservCrit
+
+#RESTARTOUTFILE
+one                     TypeRestartOutFile
+
+! Grid structure info
+INCLUDE
+Param/GANYMEDE/Grid
+
+#GRIDGEOMETRY
+spherical_lnr   TypeGeometry
+
+#GRID
+20      proc_dims(1)           nRootBlockX
+16                       proc_dims(2)           nRootBlockY
+2                       proc_dims(3),          nRootBlockZ
+-150                   x1            xMin
+ 30                    x2            xMax
+-50                    y1            yMin
+ 50                    y2            yMax
+-50                    z1            zMin
+ 50                    z2            zMax
+
+#LIMITRADIUS
+0.5                     rMin
+166.0                   rMax > (sqrt(100^2+100^2+100^2))
+
+
+----------------BC-----------------
+#OUTERBOUNDARY
+float			TypeCellBc1
+float			TypeCellBc2
+float		  TypeCellBc3
+float		  TypeCellBc4
+float	  	TypeCellBc5
+float 		TypeCellBc6
+
+#BOXBOUNDARY
+fixed			TypeBcXmin
+fixed			TypeBcXmax
+fixed			TypeBcYmin
+fixed			TypeBcYmax
+fixed			TypeBcZmin
+fixed			TypeBcZmax
+
+#INNERBOUNDARY
+float
+
+-------------end BC--------------
+
+RESISTIVITY
+T			UseResistivity
+user			TypeResistivity
+0.0			Eta0Si
+
+#USERSWITCH
++init +ic		StringSwitch
+
+#USERINPUTBEGIN --------------------
+
+
+#USERINPUTEND ----------------------
+
+#TIMESTEPPING
+2			nStage
+0.8			CflExlp
+
+#SCHEME
+2                       nOrder (1 or 2)
+Linde                 TypeFlux (Roe, Rusanov, Linde, Sokolov
+minmod                   TypeLimiter
+
+
+#SAVEINITIAL
+T	
+
+#SAVELOGFILE
+T			DoSaveLogfile
+RAW			StringLogfile
+1			DnSaveLogfile
+-1.			DtSaveLogfile
+
+#SAVEPLOT
+2			nPlotFiles
+y=0 VAR idl_ascii       StringPlot
+200                   	DnSavePlot
+-1.                     DtSavePlot
+-1.                     Dx
+{MHD} b1x b1y b1z eta absdivb dt dx     NameVars
+{default}                       NamePars
+y=0 MHD tec             StringPlot
+200			DnOutput
+-1.0
+
+#STOP
+2000			MaxIteration
+-1.0			tSimulationMax

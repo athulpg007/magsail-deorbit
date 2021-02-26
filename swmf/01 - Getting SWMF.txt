@@ -1,0 +1,9 @@
+BATS-R-US is run from within the SWMF which can be obtained from the University of Michigan
+at the following location.
+
+http://csem.engin.umich.edu/tools/swmf/index.php
+
+A backup copy of SWMF is stored in Athul Pradeepkumar Girija's OneDrive.
+Contact apradee@purdue.edu to obtain this locally archived copy.
+
+
